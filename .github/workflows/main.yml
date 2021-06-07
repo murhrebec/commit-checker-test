@@ -22,8 +22,33 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Check Commit Type
+      - name: Check jira ticket and module
         uses: gsactions/commit-message-checker@v1
         with:
-          pattern: '^ESW-\d{1,5}:\s.+$'
-          error: 'Your first line has to contain a ESW jira ticket id(E.g.: ESW-1234)'
+          pattern: '^[A-Z]{3,10}-\d{1,6}: .{2,16}: .+$'
+          flags: 'gm'
+          error: 'Your first line has to contain a jira ticket id and module(e.g.: "ESW-1234: dnsmasq: Commit message"'
+      - name: Check if double new line after title
+        uses: gsactions/commit-message-checker@v1
+        with:
+          pattern: '^[A-Z]{3,10}-\d{1,6}: .{2,16}: .+$\n\n^.+$'
+          flags: 'gm'
+          error: 'Double new line missing after title'
+      - name: Check line length
+        uses: gsactions/commit-message-checker@v1
+        with:
+          pattern: '^.{1,72}$'
+          flags: 'gm'
+          error: 'Max line length is 72 characters'
+      - name: Check commit signature
+        uses: gsactions/commit-message-checker@v1
+        with:
+          pattern: '^Signed-off-by: .+ <.+@.+>$'
+          flags: 'gm'
+          error: 'Commit is not signed(Use: "git commit -s" to sign commit'
+      - name: Check if double new line before signature
+        uses: gsactions/commit-message-checker@v1
+        with:
+          pattern: '^\n$^Signed-off-by: .+ <.+@.+>$'
+          flags: 'gm'
+          error: 'Double new line missing before signature'
