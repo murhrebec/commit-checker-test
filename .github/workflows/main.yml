@@ -22,8 +22,21 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Check Commit Type
+      - name: Check jira ticket and module
         uses: gsactions/commit-message-checker@v1
         with:
-          pattern: '^ESW-\d{1,5}:\s.+$'
-          error: 'Your first line has to contain a ESW jira ticket id(E.g.: ESW-1234)'
+          pattern: '^[A-Z]{3,10}-\d{1,6}:\s.+$'
+          flags: 'gm'
+          error: 'Your first line has to contain a jira ticket id and module(e.g.: "ESW-1234: dnsmasq: Commit message"'
+      - name: Check line length
+        uses: gsactions/commit-message-checker@v1
+        with:
+          pattern: '^.{1,80}$'
+          flags: 'gm'
+          error: 'Max line length is 80 characters'
+      - name: Check commit message length
+        uses: gsactions/commit-message-checker@v1
+        with:
+          pattern: '^.{1,128}$'
+          flags: 'gs'
+          error: 'Commit message is longer than 128 characters'
