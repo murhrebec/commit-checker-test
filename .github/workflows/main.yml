@@ -28,7 +28,7 @@ jobs:
           pattern: '^[A-Z]{3,10}-\d{1,6}: .{2,16}: .+$'
           flags: 'gm'
           error: 'Your first line has to contain a jira ticket id and module(e.g.: "ESW-1234: dnsmasq: Commit message"'
-      - name: Check jira ticket and module
+      - name: Check if double new line after title
         uses: gsactions/commit-message-checker@v1
         with:
           pattern: '^[A-Z]{3,10}-\d{1,6}: .{2,16}: .+$\n\n^.+$'
