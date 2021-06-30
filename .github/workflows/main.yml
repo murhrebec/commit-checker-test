@@ -21,16 +21,16 @@ jobs:
       - name: Check if PR title contains jira ticket and module
         uses: gsactions/commit-message-checker@v1
         with:
-          pattern: '^(?:(?:Revert \")?[A-Z]{3,10}-\d{1,6}: [a-z0-9\/\-\_]{2,16}: .+?)|(?:Merge .+?)$'
+          pattern: '^(?:(?:Revert \")?[A-Z]{3,10}-\d{1,6}: .+?)|(?:Merge .+?)$'
           flags: 'g'
-          error: 'PR title has to contain a jira ticket id and module or it needs to start with Merge(e.g.: "ESW-1234: dnsmasq: PR title")'
+          error: 'PR title has to start with jira ticket id or Merge(e.g.: "ESW-1234: PR title" or "Merge pull request...")'
           excludeDescription: 'true'
       - name: Check jira ticket and module
         uses: gsactions/commit-message-checker@v1
         with:
-          pattern: '^(?:(?:Revert \")?[A-Z]{3,10}-\d{1,6}: [a-z0-9\/\-\_]{2,16}: .+?)|(?:Merge .+?)$'
+          pattern: '^(?:(?:Revert \")?[A-Z]{3,10}-\d{1,6}: .+?)|(?:Merge .+?)$'
           flags: 'g'
-          error: 'Commit title has to contain a jira ticket id and module or it needs to start with Merge(e.g.: "ESW-1234: dnsmasq: Commit title")'
+          error: 'Commit title has to start with jira ticket id or Merge(e.g.: "ESW-1234: Commit title" or "Merge pull request...")'
           checkAllCommitMessages: 'true'
           accessToken: ${{ secrets.GITHUB_TOKEN }}
           excludeDescription: 'true'
@@ -38,7 +38,7 @@ jobs:
       - name: Check if double new line after title
         uses: gsactions/commit-message-checker@v1
         with:
-          pattern: '(?:^(?:Revert \")?[A-Z]{3,10}-\d{1,6}: [a-z0-9\/\-]{2,16}: .+?$\n\n\S)|(?:^Merge \S)'
+          pattern: '(?:^(?:Revert \")?[A-Z]{3,10}-\d{1,6}: .+?$\n\n\S)|(?:^Merge \S)'
           flags: 'gm'
           error: 'Double new line missing after title'
           checkAllCommitMessages: 'true'
