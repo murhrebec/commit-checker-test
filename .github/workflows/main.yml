@@ -12,7 +12,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  - check-commit-message:
+  pr-title-has-jira-ticket:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -25,6 +25,14 @@ jobs:
           flags: 'g'
           error: 'PR title has to start with jira ticket id or Merge(e.g.: "ESW-1234: PR title" or "Merge pull request...")'
           excludeDescription: 'true'
+
+# This workflow contains a single job called "build"
+  commit-message-has-jira-ticket:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
       - name: Check jira ticket and module
         uses: gsactions/commit-message-checker@v1
         with:
@@ -35,6 +43,14 @@ jobs:
           accessToken: ${{ secrets.GITHUB_TOKEN }}
           excludeDescription: 'true'
           excludeTitle: 'true'
+
+# This workflow contains a single job called "build"
+  commit-message-double-new-line-after-title:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
       - name: Check if double new line after title
         uses: gsactions/commit-message-checker@v1
         with:
@@ -45,6 +61,14 @@ jobs:
           accessToken: ${{ secrets.GITHUB_TOKEN }}
           excludeDescription: 'true'
           excludeTitle: 'true'
+
+# This workflow contains a single job called "build"
+  commit-message-line-lengt:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
       - name: Check line length
         uses: gsactions/commit-message-checker@v1
         with:
@@ -54,6 +78,14 @@ jobs:
           checkAllCommitMessages: 'true'
           accessToken: ${{ secrets.GITHUB_TOKEN }}
           excludeDescription: 'true'
+
+# This workflow contains a single job called "build"
+  commit-message-signature:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
       - name: Check commit signature
         uses: gsactions/commit-message-checker@v1
         with:
