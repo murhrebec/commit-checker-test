@@ -1,21 +1,30 @@
 pipeline {
     agent any
 
+    triggers {
+        GenericTrigger(
+         genericVariables: [
+          [key: 'action', value: '$.action'],
+          [key: 'merged', value: '$.pull_request.merged']
+         ],
+         causeString: 'Triggered on $action with merge status $merged',
+         printContributedVariables: true,
+         printPostContent: true,
+         silentResponse: false
+        )
+    }
+
     stages {
-        stage('Build') {
-            when {
-                allOf {
-                    expression { env.GITHUB_PR_STATE == "CLOSE" }
-                    expression { env.GITHUB_PR_TARGET_BRANCH == "master" }
+        stage('Check for Merge') {
+            steps {
+                script {
+                    if (env.merged == 'true') {
+                        echo "Pull request merged, running the pipeline..."
+                        // Your pipeline steps go here
+                    } else {
+                        echo "Not a merge event, skipping..."
+                    }
                 }
-            }
-            steps {
-                echo 'PR was merged to master...'
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Something else happened...'
             }
         }
     }
