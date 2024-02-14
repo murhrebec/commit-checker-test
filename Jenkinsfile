@@ -3,9 +3,6 @@ pipeline {
 
     stages {
         stage('Build') {
-            triggers {
-
-            }
             when {
                 allOf {
                     expression { env.GITHUB_PR_STATE == "CLOSE" }
