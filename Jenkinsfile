@@ -2,20 +2,16 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
-            when {
-                allOf {
-                    expression { env.GITHUB_PR_STATE == "CLOSE" }
-                    expression { env.GITHUB_PR_TARGET_BRANCH == "master" }
-                }
-            }
+        stage('Changes available...') {
             steps {
-                echo 'PR was merged to master...'
+                echo 'Files uploaded...'
             }
         }
-        stage('Test') {
+        stage('No changes available...') {
             steps {
-                echo 'Something else happened...'
+                catchError(buildResult: 'NOT_BUILT', stageResult: 'UNSTABLE') {
+                    sh "exit 1"
+                }
             }
         }
     }
