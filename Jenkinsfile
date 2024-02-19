@@ -9,9 +9,14 @@ pipeline {
         }
         stage('No changes available...') {
             steps {
+                script {
+                    currentBuild.result = 'NOT_BUILD'
+                }
+                /*
                 catchError(buildResult: 'ABORTED', stageResult: 'UNSTABLE') {
                     sh "exit 1"
                 }
+                */
             }
         }
     }
